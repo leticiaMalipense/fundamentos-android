@@ -4,9 +4,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -17,17 +24,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.i(TAG, "onCreate");
 
-        TextView minhaView = (TextView) findViewById(R.id.textView);
-        minhaView.setText("Testando....");
+        /*
+        List<String> clienteName = new ArrayList<String>();
+        clienteName.add("Nome 1");
+        clienteName.add("Nome 2");
+        clienteName.add("Nome 2");
 
-        Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Cliquei!!", Toast.LENGTH_LONG).show();
-            }
-        });
+        ListView lista = (ListView) findViewById(R.id.listViewClients);
+        lista.setAdapter(new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_list_item_1, clienteName.toArray(new String[]{})));
+        */
+
+        ListView listViewClients = (ListView) findViewById(R.id.listViewClients);
+        listViewClients.setAdapter(new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_list_item_1, Arrays.asList("Nome 1", "Nome 2", "Nome 3")));
     }
 }

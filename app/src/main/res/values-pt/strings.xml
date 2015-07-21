@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Projeto1</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Opções</string>
+    <string name="login">Entrar</string>
+    <string name="userName">Nome</string>
+    <string name="password">Senha</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="age">Idade</string>
+    <string name="name">Nome</string>
+    <string name="address">Endereço</string>
+    <string name="phone">Telefone</string>
+
+</resources>

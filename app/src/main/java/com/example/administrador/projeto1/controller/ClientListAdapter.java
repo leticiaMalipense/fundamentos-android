@@ -1,4 +1,4 @@
-package com.example.administrador.projeto1;
+package com.example.administrador.projeto1.controller;
 
 import android.app.Activity;
 import android.view.View;
@@ -6,9 +6,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.administrador.projeto1.R;
+import com.example.administrador.projeto1.model.entities.Cliente;
+
 import java.util.List;
 
-public class ClientListAdapter extends BaseAdapter {
+public class  ClientListAdapter extends BaseAdapter {
 
     private List<Cliente> clientList;
     private Activity context;

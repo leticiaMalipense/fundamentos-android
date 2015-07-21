@@ -1,18 +1,13 @@
-package com.example.administrador.projeto1;
+package com.example.administrador.projeto1.controller;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.administrador.projeto1.R;
+import com.example.administrador.projeto1.model.entities.Cliente;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 

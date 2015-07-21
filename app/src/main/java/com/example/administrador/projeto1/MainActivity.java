@@ -26,18 +26,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         /*
-        List<String> clienteName = new ArrayList<String>();
-        clienteName.add("Nome 1");
-        clienteName.add("Nome 2");
-        clienteName.add("Nome 2");
-
-        ListView lista = (ListView) findViewById(R.id.listViewClients);
-        lista.setAdapter(new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_list_item_1, clienteName.toArray(new String[]{})));
-        */
-
         ListView listViewClients = (ListView) findViewById(R.id.listViewClients);
         listViewClients.setAdapter(new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_list_item_1, Arrays.asList("Nome 1", "Nome 2", "Nome 3")));
+        */
+        List<Cliente> listaCliente = getClienteList();
+        ListView lista = (ListView) findViewById(R.id.listViewClients);
+        ClientListAdapter adapter = new ClientListAdapter(MainActivity.this, listaCliente);
+        lista.setAdapter(adapter);
+    }
+
+    private List<Cliente> getClienteList() {
+        List<Cliente> listaCliente = new ArrayList<Cliente>();
+        Cliente c1 = new Cliente();
+        c1.setName("Nome 1");
+        c1.setAge(10);
+
+        Cliente c2 = new Cliente();
+        c2.setName("Nome 2");
+        c2.setAge(10);
+
+        listaCliente.add(c1);
+        listaCliente.add(c2);
+        return listaCliente;
     }
 }

@@ -6,13 +6,13 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/nome"
+        android:id="@+id/txtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/name" />
 
     <EditText
-        android:id="@+id/idade"
+        android:id="@+id/txtAge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/age"
@@ -20,17 +20,16 @@
 
 
     <EditText
-        android:id="@+id/endereco"
+        android:id="@+id/txtAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/address" />
 
     <EditText
-        android:id="@+id/telefone"
+        android:id="@+id/txtPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/phone"
         android:inputType="phone" />
-
 
 </LinearLayout>

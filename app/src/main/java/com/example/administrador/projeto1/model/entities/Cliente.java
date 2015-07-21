@@ -1,5 +1,9 @@
 package com.example.administrador.projeto1.model.entities;
 
+import com.example.administrador.projeto1.model.persistence.MemoryClientRepository;
+
+import java.util.List;
+
 public class Cliente {
     private String name;
     private Integer age;
@@ -38,6 +42,18 @@ public class Cliente {
         this.telefone = telefone;
     }
 
+    public void save() {
+        MemoryClientRepository.getInstance().save(this);
+    }
+
+    public void delete() {
+        MemoryClientRepository.getInstance().delete(this);
+    }
+
+    public static List<Cliente> getAll() {
+        return MemoryClientRepository.getInstance().getAll();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,5 +72,10 @@ public class Cliente {
         int result = getName() != null ? getName().hashCode() : 0;
         result = 31 * result + (getAge() != null ? getAge().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return getName()+" \n";
     }
 }

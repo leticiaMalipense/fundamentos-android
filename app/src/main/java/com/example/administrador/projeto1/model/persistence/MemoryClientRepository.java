@@ -15,7 +15,7 @@ public class MemoryClientRepository implements ClientRepository {
         clientes = new ArrayList<Cliente>();
     }
 
-    public ClientRepository getInstance() {
+    public static ClientRepository getInstance() {
         if (MemoryClientRepository.singletonInstance == null) {
             MemoryClientRepository.singletonInstance = new MemoryClientRepository();
         }
@@ -37,5 +37,19 @@ public class MemoryClientRepository implements ClientRepository {
         clientes.remove(cliente);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MemoryClientRepository)) return false;
 
+        MemoryClientRepository that = (MemoryClientRepository) o;
+
+        return !(clientes != null ? !clientes.equals(that.clientes) : that.clientes != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return clientes != null ? clientes.hashCode() : 0;
+    }
 }

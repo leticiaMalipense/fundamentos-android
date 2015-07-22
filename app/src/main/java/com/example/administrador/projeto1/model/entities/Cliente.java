@@ -76,6 +76,6 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return getName()+" \n";
+        return getName()+"\n";
     }
 }

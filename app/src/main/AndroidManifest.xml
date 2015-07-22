@@ -26,6 +26,11 @@
             android:label="Projeto1">
 
         </activity>
+        <activity
+            android:name=".controller.ListarActivity"
+            android:label="Projeto1">
+
+        </activity>
     </application>
 
 </manifest>

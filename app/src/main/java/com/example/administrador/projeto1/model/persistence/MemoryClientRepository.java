@@ -1,6 +1,6 @@
 package com.example.administrador.projeto1.model.persistence;
 
-import com.example.administrador.projeto1.model.entities.Cliente;
+import com.example.administrador.projeto1.model.entities.Client;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +8,11 @@ import java.util.List;
 public class MemoryClientRepository implements ClientRepository {
 
     private static MemoryClientRepository singletonInstance;
-    private List<Cliente> clientes;
+    private List<Client> clients;
 
     private MemoryClientRepository() {
         super();
-        clientes = new ArrayList<Cliente>();
+        clients = new ArrayList<Client>();
     }
 
     public static ClientRepository getInstance() {
@@ -23,18 +23,18 @@ public class MemoryClientRepository implements ClientRepository {
     }
 
     @Override
-    public void save(Cliente cliente) {
-        clientes.add(cliente);
+    public void save(Client client) {
+        clients.add(client);
     }
 
     @Override
-    public List<Cliente> getAll() {
-        return clientes;
+    public List<Client> getAll() {
+        return clients;
     }
 
     @Override
-    public void delete(Cliente cliente) {
-        clientes.remove(cliente);
+    public void delete(Client client) {
+        clients.remove(client);
     }
 
     @Override
@@ -44,12 +44,12 @@ public class MemoryClientRepository implements ClientRepository {
 
         MemoryClientRepository that = (MemoryClientRepository) o;
 
-        return !(clientes != null ? !clientes.equals(that.clientes) : that.clientes != null);
+        return !(clients != null ? !clients.equals(that.clients) : that.clients != null);
 
     }
 
     @Override
     public int hashCode() {
-        return clientes != null ? clientes.hashCode() : 0;
+        return clients != null ? clients.hashCode() : 0;
     }
 }

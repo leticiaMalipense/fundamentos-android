@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.administrador.projeto1.R;
-import com.example.administrador.projeto1.model.entities.Cliente;
+import com.example.administrador.projeto1.model.entities.Client;
 
-public class CadastroActivity extends AppCompatActivity {
+public class SaveClientActivity extends AppCompatActivity {
 
     private EditText txtName;
     private EditText txtAge;
@@ -21,7 +20,7 @@ public class CadastroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_cadastro);
+        this.setContentView(R.layout.activity_save);
 
         txtName = (EditText) findViewById(R.id.txtName);
         txtAge = (EditText) findViewById(R.id.txtAge);
@@ -39,21 +38,21 @@ public class CadastroActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menuSave) {
-            Cliente cliente = bindCliente();
-            cliente.save();
+            Client client = bindCliente();
+            client.save();
 
-            Toast.makeText(CadastroActivity.this, Cliente.getAll().toString() ,Toast.LENGTH_LONG).show();
+            Toast.makeText(SaveClientActivity.this, Client.getAll().toString() ,Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private Cliente bindCliente() {
-        Cliente cliente = new Cliente();
-        cliente.setName(txtName.getText().toString());
-        cliente.setAge(Integer.valueOf(txtAge.getText().toString()));
-        cliente.setEndereco(txtAddress.getText().toString());
-        cliente.setTelefone(txtPhone.getText().toString());
-        return cliente;
+    private Client bindCliente() {
+        Client client = new Client();
+        client.setName(txtName.getText().toString());
+        client.setAge(Integer.valueOf(txtAge.getText().toString()));
+        client.setEndereco(txtAddress.getText().toString());
+        client.setTelefone(txtPhone.getText().toString());
+        return client;
     }
 
 }

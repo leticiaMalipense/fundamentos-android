@@ -4,7 +4,7 @@ import com.example.administrador.projeto1.model.persistence.MemoryClientReposito
 
 import java.util.List;
 
-public class Cliente {
+public class Client {
     private String name;
     private Integer age;
     private String endereco;
@@ -50,20 +50,20 @@ public class Cliente {
         MemoryClientRepository.getInstance().delete(this);
     }
 
-    public static List<Cliente> getAll() {
+    public static List<Client> getAll() {
         return MemoryClientRepository.getInstance().getAll();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Cliente)) return false;
+        if (!(o instanceof Client)) return false;
 
-        Cliente cliente = (Cliente) o;
+        Client client = (Client) o;
 
-        if (getName() != null ? !getName().equals(cliente.getName()) : cliente.getName() != null)
+        if (getName() != null ? !getName().equals(client.getName()) : client.getName() != null)
             return false;
-        return !(getAge() != null ? !getAge().equals(cliente.getAge()) : cliente.getAge() != null);
+        return !(getAge() != null ? !getAge().equals(client.getAge()) : client.getAge() != null);
 
     }
 

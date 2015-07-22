@@ -26,11 +26,7 @@
             android:label="Projeto1">
 
         </activity>
-        <activity
-            android:name=".controller.ListClientActivity"
-            android:label="Projeto1">
 
-        </activity>
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.administrador.projeto1.R;
 import com.example.administrador.projeto1.model.entities.Client;
+import com.example.administrador.projeto1.util.FormHelper;
 
 public class SaveClientActivity extends AppCompatActivity {
 
@@ -38,10 +39,12 @@ public class SaveClientActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menuSave) {
-            Client client = bindCliente();
-            client.save();
-
-            Toast.makeText(SaveClientActivity.this, Client.getAll().toString() ,Toast.LENGTH_LONG).show();
+            if (FormHelper.requiredValidate(SaveClientActivity.this, txtName, txtAge, txtAddress, txtPhone)) {
+                Client client = bindCliente();
+                client.save();
+                SaveClientActivity.this.finish();
+                Toast.makeText(SaveClientActivity.this, R.string.success, Toast.LENGTH_LONG).show();
+            }
         }
         return super.onOptionsItemSelected(item);
     }

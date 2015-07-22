@@ -8,13 +8,5 @@
         android:icon="@drawable/ic_action_action_find_in_page"
         android:title="@string/save" />
 
-    <item
-        android:id="@+id/menuRemove"
-        app:showAsAction="always"
-        android:title="@string/remove" />
-    <item
-        android:id="@+id/menuUpdate"
-        app:showAsAction="always"
-        android:title="@string/update" />
 
 </menu>

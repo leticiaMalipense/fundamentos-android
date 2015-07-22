@@ -15,6 +15,7 @@ public class  ClientListAdapter extends BaseAdapter {
 
     private List<Client> clientList;
     private Activity context;
+    private List<Client> clients;
 
     public ClientListAdapter(Activity context, List<Client> clientList) {
         this.context = context;
@@ -49,5 +50,10 @@ public class  ClientListAdapter extends BaseAdapter {
         textViewAge.setText(client.getAge().toString());
 
         return view;
+    }
+
+
+    public void setClients(List<Client> clients) {
+        this.clients = Client.getAll();
     }
 }

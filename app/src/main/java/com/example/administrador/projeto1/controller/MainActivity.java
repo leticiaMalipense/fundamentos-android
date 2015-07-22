@@ -1,19 +1,23 @@
 package com.example.administrador.projeto1.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.administrador.projeto1.R;
 import com.example.administrador.projeto1.model.entities.Client;
+import com.example.administrador.projeto1.model.persistence.MemoryClientRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private ListView lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,23 +30,36 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, Arrays.asList("Nome 1", "Nome 2", "Nome 3")));
         */
         List<Client> listaClient = getClienteList();
-        ListView lista = (ListView) findViewById(R.id.listViewClients);
+        lista = (ListView) findViewById(R.id.listViewClients);
         ClientListAdapter adapter = new ClientListAdapter(MainActivity.this, listaClient);
         lista.setAdapter(adapter);
     }
 
     private List<Client> getClienteList() {
-        List<Client> listaClient = new ArrayList<Client>();
-        Client c1 = new Client();
-        c1.setName("Nome 1");
-        c1.setAge(10);
+        return MemoryClientRepository.getInstance().getAll();
+    }
 
-        Client c2 = new Client();
-        c2.setName("Nome 2");
-        c2.setAge(10);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-        listaClient.add(c1);
-        listaClient.add(c2);
-        return listaClient;
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menuAdd) {
+            Intent intent = new Intent(MainActivity.this, SaveClientActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ClientListAdapter adapter = (ClientListAdapter) lista.getAdapter();
+        adapter.setClients(Client.getAll());
+        adapter.notifyDataSetChanged();
     }
 }

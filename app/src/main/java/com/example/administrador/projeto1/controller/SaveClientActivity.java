@@ -1,6 +1,8 @@
 package com.example.administrador.projeto1.controller;
 
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,10 +15,13 @@ import com.example.administrador.projeto1.util.FormHelper;
 
 public class SaveClientActivity extends AppCompatActivity {
 
+    public static String CLIENT_PARAM = "CLIENT_PARAM";
+
     private EditText txtName;
     private EditText txtAge;
     private EditText txtAddress;
     private EditText txtPhone;
+    private Client client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +32,19 @@ public class SaveClientActivity extends AppCompatActivity {
         txtAge = (EditText) findViewById(R.id.txtAge);
         txtAddress = (EditText) findViewById(R.id.txtAddress);
         txtPhone = (EditText) findViewById(R.id.txtPhone);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            client = (Client) extras.getParcelable(CLIENT_PARAM);
+            if (client == null) {
+                throw new IllegalArgumentException();
+            }
+            bindForm(client);
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.menu_client_persist, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -40,7 +53,7 @@ public class SaveClientActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menuSave) {
             if (FormHelper.requiredValidate(SaveClientActivity.this, txtName, txtAge, txtAddress, txtPhone)) {
-                Client client = bindCliente();
+                bindCliente();
                 client.save();
                 SaveClientActivity.this.finish();
                 Toast.makeText(SaveClientActivity.this, R.string.success, Toast.LENGTH_LONG).show();
@@ -49,13 +62,20 @@ public class SaveClientActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private Client bindCliente() {
-        Client client = new Client();
+    private void bindCliente() {
+        client = new Client();
         client.setName(txtName.getText().toString());
         client.setAge(Integer.valueOf(txtAge.getText().toString()));
-        client.setEndereco(txtAddress.getText().toString());
-        client.setTelefone(txtPhone.getText().toString());
-        return client;
+        client.setAddress(txtAddress.getText().toString());
+        client.setPhone(txtPhone.getText().toString());
+
+    }
+
+    private void bindForm(Client client) {
+        txtName.setText(client.getName());
+        txtAge.setText(client.getAge().toString());
+        txtAddress.setText(client.getAddress());
+        txtPhone.setText(client.getPhone());
     }
 
 }

@@ -8,4 +8,5 @@ public interface ClientRepository {
     public abstract void save(Client client);
     public abstract List<Client> getAll();
     public abstract void delete(Client client);
+
 }

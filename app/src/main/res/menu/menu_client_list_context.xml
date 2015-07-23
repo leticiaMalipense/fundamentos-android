@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/menuEdit"
+        android:id="@+id/menuRemove"
         app:showAsAction="always"
         android:icon="@drawable/ic_action_action_find_in_page"
         android:title="@string/remove" />
 
     <item
-        android:id="@+id/menuRemove"
+        android:id="@+id/menuEdit"
         app:showAsAction="always"
         android:icon="@drawable/ic_action_action_find_in_page"
         android:title="@string/edit" />

@@ -13,7 +13,16 @@ public class Client implements Serializable, Parcelable {
     private Integer age;
     private String address;
     private String phone;
-    private Integer partialAge;
+
+    public Client(){
+        super();
+    }
+
+    public Client(Parcel in){
+        super();
+        readToParcel(in);
+    }
+
 
     public String getName() {
         return name;
@@ -45,14 +54,6 @@ public class Client implements Serializable, Parcelable {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public Integer getPartialAge() {
-        return partialAge;
-    }
-
-    public void setPartialAge(Integer partialAge) {
-        this.partialAge = partialAge;
     }
 
     public void save() {
@@ -105,19 +106,21 @@ public class Client implements Serializable, Parcelable {
         dest.writeString(address == null ? "" : address);
     }
 
-    public void readToParce(Parcel in) {
+    public void readToParcel(Parcel in) {
         name = in.readString();
         phone = in.readString();
+        int partialAge = in.readInt();
         age = partialAge == -1 ? null : partialAge;
         address = in.readString();
     }
     public static final Parcelable.Creator<Client> CREATOR = new Parcelable.Creator<Client>() {
         public Client createFromParcel(Parcel source) {
-            return new Client();
+            return new Client(source);
         }
 
         public Client[] newArray(int size) {
             return new Client[size];
         }
     };
+
 }

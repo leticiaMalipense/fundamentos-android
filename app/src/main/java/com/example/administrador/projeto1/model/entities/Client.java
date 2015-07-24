@@ -1,14 +1,19 @@
 package com.example.administrador.projeto1.model.entities;
 
+import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.administrador.projeto1.model.persistence.ClientContract;
 import com.example.administrador.projeto1.model.persistence.MemoryClientRepository;
+import com.example.administrador.projeto1.model.persistence.SQLiteClientRepositiry;
 
 import java.io.Serializable;
 import java.util.List;
 
 public class Client implements Serializable, Parcelable {
+    private Integer id;
     private String name;
     private Integer age;
     private String address;
@@ -23,6 +28,13 @@ public class Client implements Serializable, Parcelable {
         readToParcel(in);
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -57,15 +69,15 @@ public class Client implements Serializable, Parcelable {
     }
 
     public void save() {
-        MemoryClientRepository.getInstance().save(this);
+        SQLiteClientRepositiry.getInstance().save(this);
     }
 
     public void delete() {
-        MemoryClientRepository.getInstance().delete(this);
+        SQLiteClientRepositiry.getInstance().delete(this);
     }
 
     public static List<Client> getAll() {
-        return MemoryClientRepository.getInstance().getAll();
+        return SQLiteClientRepositiry.getInstance().getAll();
     }
 
     @Override
@@ -75,16 +87,21 @@ public class Client implements Serializable, Parcelable {
 
         Client client = (Client) o;
 
-        if (getName() != null ? !getName().equals(client.getName()) : client.getName() != null)
-            return false;
-        return !(getAge() != null ? !getAge().equals(client.getAge()) : client.getAge() != null);
+        if (!getId().equals(client.getId())) return false;
+        if (!getName().equals(client.getName())) return false;
+        if (!getAge().equals(client.getAge())) return false;
+        if (!getAddress().equals(client.getAddress())) return false;
+        return getPhone().equals(client.getPhone());
 
     }
 
     @Override
     public int hashCode() {
-        int result = getName() != null ? getName().hashCode() : 0;
-        result = 31 * result + (getAge() != null ? getAge().hashCode() : 0);
+        int result = getId().hashCode();
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + getAge().hashCode();
+        result = 31 * result + getAddress().hashCode();
+        result = 31 * result + getPhone().hashCode();
         return result;
     }
 
@@ -100,6 +117,7 @@ public class Client implements Serializable, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id == null ? -1 : id);
         dest.writeString(name == null ? "" : name);
         dest.writeString(phone == null ? "" : phone);
         dest.writeInt(age == null ? -1 : age);
@@ -107,6 +125,8 @@ public class Client implements Serializable, Parcelable {
     }
 
     public void readToParcel(Parcel in) {
+        int partialId = in.readInt();
+        id = partialId == -1 ? null : partialId;
         name = in.readString();
         phone = in.readString();
         int partialAge = in.readInt();
@@ -122,5 +142,15 @@ public class Client implements Serializable, Parcelable {
             return new Client[size];
         }
     };
+
+    public static ContentValues getContentValues(Client client) {
+        ContentValues values = new ContentValues();
+        values.put(ClientContract.ID, client.getId());
+        values.put(ClientContract.NAME, client.getName());
+        values.put(ClientContract.AGE, client.getAge());
+        values.put(ClientContract.PHONE, client.getName());
+        values.put(ClientContract.ADDRESS, client.getName());
+        return values;
+    }
 
 }

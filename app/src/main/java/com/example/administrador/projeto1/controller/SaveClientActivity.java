@@ -63,7 +63,9 @@ public class SaveClientActivity extends AppCompatActivity {
     }
 
     private void bindCliente() {
-        client = new Client();
+        if(client == null){
+            client = new Client();
+        }
         client.setName(txtName.getText().toString());
         client.setAge(Integer.valueOf(txtAge.getText().toString()));
         client.setAddress(txtAddress.getText().toString());

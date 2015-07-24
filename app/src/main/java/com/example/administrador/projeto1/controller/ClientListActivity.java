@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.administrador.projeto1.R;
 import com.example.administrador.projeto1.model.entities.Client;
 import com.example.administrador.projeto1.model.persistence.MemoryClientRepository;
+import com.example.administrador.projeto1.model.persistence.SQLiteClientRepositiry;
 
 import java.util.List;
 
@@ -75,7 +76,7 @@ public class ClientListActivity extends AppCompatActivity {
     }
 
     private List<Client> getClienteList() {
-        return MemoryClientRepository.getInstance().getAll();
+        return SQLiteClientRepositiry.getInstance().getAll();
     }
 
     @Override
@@ -105,4 +106,5 @@ public class ClientListActivity extends AppCompatActivity {
         adapter.setClients(Client.getAll());
         adapter.notifyDataSetChanged();
     }
+
 }

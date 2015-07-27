@@ -4,7 +4,4 @@ import android.content.Context;
 
 public final class AppUtil {
     public static  Context CONTEXT;
-
-
-
 }

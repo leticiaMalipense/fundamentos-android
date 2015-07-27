@@ -1,5 +1,7 @@
 package com.example.administrador.projeto1.controller;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -17,6 +19,7 @@ import com.example.administrador.projeto1.model.entities.Client;
 import com.example.administrador.projeto1.model.persistence.MemoryClientRepository;
 import com.example.administrador.projeto1.model.persistence.SQLiteClientRepositiry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,9 +42,8 @@ public class ClientListActivity extends AppCompatActivity {
     listViewClients.setAdapter(new ArrayAdapter<String>(ClientListActivity.this,
             android.R.layout.simple_list_item_1, Arrays.asList("Nome 1", "Nome 2", "Nome 3")));
     */
-        List<Client> listaClient = getClienteList();
         listClient = (ListView) findViewById(R.id.listViewClients);
-        final ClientListAdapter adapter = new ClientListAdapter(ClientListActivity.this, listaClient);
+        final ClientListAdapter adapter = new ClientListAdapter(ClientListActivity.this, new ArrayList<Client>());
         listClient.setAdapter(adapter);
 
         listClient.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -64,19 +66,30 @@ public class ClientListActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menuRemove) {
-            client.delete();
-            refreshClientList();
-            Toast.makeText(ClientListActivity.this, R.string.success, Toast.LENGTH_LONG).show();
+            new AlertDialog.Builder(ClientListActivity.this)
+                    .setMessage(getString(R.string.confirm_progress))
+                    .setTitle(getString(R.string.confirm))
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            client.delete();
+                            refreshClientList();
+                            Toast.makeText(ClientListActivity.this, R.string.success, Toast.LENGTH_SHORT).show();
+                        }
+                    }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            })
+                    .create()
+                    .show();
         } else if (item.getItemId() == R.id.menuEdit) {
             Intent intent = new Intent(ClientListActivity.this, SaveClientActivity.class);
             intent.putExtra(SaveClientActivity.CLIENT_PARAM, (Parcelable) client);
             startActivity(intent);
         }
         return super.onContextItemSelected(item);
-    }
-
-    private List<Client> getClienteList() {
-        return SQLiteClientRepositiry.getInstance().getAll();
     }
 
     @Override

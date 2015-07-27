@@ -18,5 +18,9 @@
     <string name="personalData">Personal Data</string>
     <string name="success">Success</string>
     <string name="edit">Edit</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="confirm">Confirmar</string>
+    <string name="confirm_progress">\?</string>
 
 </resources>

@@ -46,16 +46,14 @@ public class SQLiteClientRepositiry implements ClientRepository {
 
     @Override
     public List<Client> getAll() {
-        List<Client> clients = new ArrayList<Client>();
         DataBaseHelper helper = new DataBaseHelper(AppUtil.CONTEXT);
         SQLiteDatabase db = helper.getWritableDatabase();
 
         Cursor cursor =
                 db.query(ClientContract.TABLE, ClientContract.COLUNS, null, null, null, null, ClientContract.NAME);
 
-        while (cursor.moveToNext()) {
-            getList(clients, cursor);
-        }
+
+        List<Client> clients = getList(cursor);
 
         db.close();
         helper.close();
@@ -63,7 +61,7 @@ public class SQLiteClientRepositiry implements ClientRepository {
     }
 
     private Client bind(Cursor cursor) {
-        if(cursor.isBeforeFirst() || cursor.moveToFirst()) {
+        if (!cursor.isBeforeFirst() || cursor.moveToNext()) {
             Client client = new Client();
             client.setId(cursor.getInt(cursor.getColumnIndex(ClientContract.ID)));
             client.setName(cursor.getString(cursor.getColumnIndex(ClientContract.NAME)));
@@ -74,11 +72,13 @@ public class SQLiteClientRepositiry implements ClientRepository {
         }
         return null;
     }
-    private List<Client> getList(List<Client> clients,Cursor cursor){
-        if(cursor.moveToNext()){
+
+    private List<Client> getList(Cursor cursor) {
+        List<Client> clients = new ArrayList<>();
+        while (cursor.moveToNext()) {
             clients.add(bind(cursor));
         }
-        return null;
+        return clients;
     }
 
     @Override

@@ -8,13 +8,14 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/abc_ratingbar_full_material"/>
+        android:src="@drawable/abc_ratingbar_full_material" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:hint="@string/personalData"
-        android:textSize="20dp"
-        android:layout_marginBottom="10dp"/>
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/txtName"
@@ -42,5 +43,18 @@
         android:layout_height="wrap_content"
         android:hint="@string/phone"
         android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/txtCep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/cep"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/btnFindCep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/cep" />
 
 </LinearLayout>

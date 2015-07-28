@@ -22,5 +22,6 @@
     <string name="yes">Yes</string>
     <string name="confirm">Confirmar</string>
     <string name="confirm_progress">\?</string>
+    <string name="cep">CEP</string>
 
 </resources>

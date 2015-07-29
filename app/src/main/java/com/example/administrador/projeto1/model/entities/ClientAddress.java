@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-public class ClientAddress implements Serializable, Parcelable {
+public class ClientAddress implements Parcelable {
     private String cep;
 
     @JsonProperty("tipoDeLogradouro")
@@ -100,5 +100,21 @@ public class ClientAddress implements Serializable, Parcelable {
         cidade = in.readString();
         estado = in.readString();
     }
+    protected ClientAddress(Parcel in) {
+        this.cep = in.readString();
+        this.tipoLogradouro = in.readString();
+        this.logradouro = in.readString();
+        this.cidade = in.readString();
+        this.estado = in.readString();
+    }
+    public static final Creator<ClientAddress> CREATOR = new Creator<ClientAddress>() {
+        public ClientAddress createFromParcel(Parcel source) {
+            return new ClientAddress(source);
+        }
+
+        public ClientAddress[] newArray(int size) {
+            return new ClientAddress[size];
+        }
+    };
 
 }

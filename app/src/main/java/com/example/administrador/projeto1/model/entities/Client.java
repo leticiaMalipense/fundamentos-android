@@ -10,7 +10,8 @@ import com.example.administrador.projeto1.model.persistence.SQLiteClientRepositi
 import java.io.Serializable;
 import java.util.List;
 
-public class Client implements Serializable, Parcelable {
+public class Client implements Parcelable {
+
     private Integer id;
     private String name;
     private Integer age;
@@ -19,11 +20,6 @@ public class Client implements Serializable, Parcelable {
 
     public Client() {
         super();
-    }
-
-    public Client(Parcel in) {
-        super();
-        readToParcel(in);
     }
 
     public Integer getId() {
@@ -91,8 +87,8 @@ public class Client implements Serializable, Parcelable {
         if (!getId().equals(client.getId())) return false;
         if (!getName().equals(client.getName())) return false;
         if (!getAge().equals(client.getAge())) return false;
-        if (!getAddress().equals(client.getAddress())) return false;
-        return getPhone().equals(client.getPhone());
+        if (!getPhone().equals(client.getPhone())) return false;
+        return getAddress().equals(client.getAddress());
 
     }
 
@@ -101,49 +97,15 @@ public class Client implements Serializable, Parcelable {
         int result = getId().hashCode();
         result = 31 * result + getName().hashCode();
         result = 31 * result + getAge().hashCode();
-        result = 31 * result + getAddress().hashCode();
         result = 31 * result + getPhone().hashCode();
+        result = 31 * result + getAddress().hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return getName() + "\n";
+        return name;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id == null ? -1 : id);
-        dest.writeString(name == null ? "" : name);
-        dest.writeString(phone == null ? "" : phone);
-        dest.writeInt(age == null ? -1 : age);
-        dest.writeSerializable(address == null ? "" : address);
-    }
-
-    public void readToParcel(Parcel in) {
-        int partialId = in.readInt();
-        id = partialId == -1 ? null : partialId;
-        name = in.readString();
-        phone = in.readString();
-        int partialAge = in.readInt();
-        age = partialAge == -1 ? null : partialAge;
-        address = (ClientAddress) in.readSerializable();
-    }
-
-    public static final Parcelable.Creator<Client> CREATOR = new Parcelable.Creator<Client>() {
-        public Client createFromParcel(Parcel source) {
-            return new Client(source);
-        }
-
-        public Client[] newArray(int size) {
-            return new Client[size];
-        }
-    };
 
     public static ContentValues getContentValues(Client client) {
         ContentValues values = new ContentValues();
@@ -160,4 +122,35 @@ public class Client implements Serializable, Parcelable {
         return values;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
+        dest.writeString(this.name);
+        dest.writeValue(this.age);
+        dest.writeString(this.phone);
+        dest.writeParcelable(this.address, 0);
+    }
+
+    protected Client(Parcel in) {
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.name = in.readString();
+        this.age = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.phone = in.readString();
+        this.address = in.readParcelable(ClientAddress.class.getClassLoader());
+    }
+
+    public static final Creator<Client> CREATOR = new Creator<Client>() {
+        public Client createFromParcel(Parcel source) {
+            return new Client(source);
+        }
+
+        public Client[] newArray(int size) {
+            return new Client[size];
+        }
+    };
 }

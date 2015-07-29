@@ -4,9 +4,11 @@ package com.example.administrador.projeto1.model.persistence;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
 
 import com.example.administrador.projeto1.model.entities.AppUtil;
 import com.example.administrador.projeto1.model.entities.Client;
+import com.example.administrador.projeto1.model.entities.ClientAddress;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,10 +65,20 @@ public class SQLiteClientRepositiry implements ClientRepository {
     private Client bind(Cursor cursor) {
         if (!cursor.isBeforeFirst() || cursor.moveToNext()) {
             Client client = new Client();
+            ClientAddress address = new ClientAddress();
             client.setId(cursor.getInt(cursor.getColumnIndex(ClientContract.ID)));
             client.setName(cursor.getString(cursor.getColumnIndex(ClientContract.NAME)));
             client.setAge(cursor.getInt(cursor.getColumnIndex(ClientContract.AGE)));
             client.setPhone(cursor.getString(cursor.getColumnIndex(ClientContract.PHONE)));
+
+            address.setCep(cursor.getString(cursor.getColumnIndex(ClientContract.ZIPCODE)));
+            address.setTipoLogradouro(cursor.getString(cursor.getColumnIndex(ClientContract.TYPE)));
+            address.setLogradouro(cursor.getString(cursor.getColumnIndex(ClientContract.STREET)));
+            address.setCidade(cursor.getString(cursor.getColumnIndex(ClientContract.CITY)));
+            address.setEstado(cursor.getString(cursor.getColumnIndex(ClientContract.STATE)));
+
+            client.setAddress(address);
+
             return client;
         }
         return null;

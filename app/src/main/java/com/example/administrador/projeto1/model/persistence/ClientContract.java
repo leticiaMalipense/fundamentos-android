@@ -23,7 +23,7 @@ public class ClientContract {
 
     public static final String STATE = "state";
 
-    public static final String[] COLUNS = {ID, NAME, AGE, PHONE};
+    public static final String[] COLUNS = {ID, NAME, AGE, PHONE, ZIPCODE, TYPE, STREET, CITY, STATE};
 
     public static String getSqlCreatTable() {
         StringBuilder sql = new StringBuilder();

@@ -18,6 +18,7 @@ import com.example.administrador.projeto1.R;
 import com.example.administrador.projeto1.model.entities.Client;
 import com.example.administrador.projeto1.model.persistence.MemoryClientRepository;
 import com.example.administrador.projeto1.model.persistence.SQLiteClientRepositiry;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +29,25 @@ public class ClientListActivity extends AppCompatActivity {
     private static final String TAG = ClientListActivity.class.getSimpleName();
     private ListView listClient;
     private Client client;
+    private FloatingActionButton fabAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bindClientList();
+        bindFab();
+    }
+
+    private void bindFab() {
+        fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ClientListActivity.this, SaveClientActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void bindClientList() {

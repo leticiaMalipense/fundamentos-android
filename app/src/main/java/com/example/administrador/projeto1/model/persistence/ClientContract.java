@@ -13,9 +13,17 @@ public class ClientContract {
 
     public static final String PHONE = "phone";
 
-    public static final String ADDRESS = "address";
+    public static final String ZIPCODE = "zipcode";
 
-    public static final String[] COLUNS = {ID, NAME, AGE, PHONE, ADDRESS};
+    public static final String TYPE = "type";
+
+    public static final String STREET = "street";
+
+    public static final String CITY = "cidade";
+
+    public static final String STATE = "state";
+
+    public static final String[] COLUNS = {ID, NAME, AGE, PHONE};
 
     public static String getSqlCreatTable() {
         StringBuilder sql = new StringBuilder();
@@ -26,7 +34,11 @@ public class ClientContract {
         sql.append(NAME + " TEXT, ");
         sql.append(AGE + " TEXT ,");
         sql.append(PHONE + " TEXT ,");
-        sql.append(ADDRESS + " TEXT ");
+        sql.append(ZIPCODE + " TEXT ,");
+        sql.append(TYPE + " TEXT ,");
+        sql.append(STREET + " TEXT ,");
+        sql.append(CITY + " TEXT ,");
+        sql.append(STATE + " TEXT ");
         sql.append(" ) ");
         return sql.toString();
     }

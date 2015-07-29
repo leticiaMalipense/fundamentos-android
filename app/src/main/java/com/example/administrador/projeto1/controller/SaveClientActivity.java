@@ -1,5 +1,6 @@
 package com.example.administrador.projeto1.controller;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,10 +23,13 @@ public class SaveClientActivity extends AppCompatActivity {
 
     private EditText txtName;
     private EditText txtAge;
-    private EditText txtAddress;
     private EditText txtPhone;
     private EditText txtCep;
     private Button btnFindCep;
+    private EditText txtTipoDeLogradouro;
+    private EditText txtLogradouro;
+    private EditText txtCity;
+    private EditText txtEstado;
     private Client client;
 
     @Override
@@ -40,9 +44,12 @@ public class SaveClientActivity extends AppCompatActivity {
     private void bindFildes() {
         txtName = (EditText) findViewById(R.id.txtName);
         txtAge = (EditText) findViewById(R.id.txtAge);
-        txtAddress = (EditText) findViewById(R.id.txtAddress);
         txtPhone = (EditText) findViewById(R.id.txtPhone);
         txtCep = (EditText) findViewById(R.id.txtCep);
+        txtTipoDeLogradouro = (EditText) findViewById(R.id.txtTipoDeLogradouro);
+        txtLogradouro = (EditText) findViewById(R.id.txtLogradouro);
+        txtCity = (EditText) findViewById(R.id.txtCity);
+        txtEstado = (EditText) findViewById(R.id.txtEstado);
         bindButton();
     }
 
@@ -51,7 +58,8 @@ public class SaveClientActivity extends AppCompatActivity {
         btnFindCep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new GetAddressByCep().execute(txtCep.getText().toString());
+                GetAddressByCep getAddressByCep = new GetAddressByCep();
+                getAddressByCep.execute(txtCep.getText().toString());
             }
         });
     }
@@ -76,7 +84,7 @@ public class SaveClientActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menuSave) {
-            if (FormHelper.requiredValidate(SaveClientActivity.this, txtName, txtAge, txtAddress, txtPhone)) {
+            if (FormHelper.requiredValidate(SaveClientActivity.this, txtName, txtAge, txtPhone)) {
                 bindCliente();
                 client.save();
                 SaveClientActivity.this.finish();
@@ -92,23 +100,40 @@ public class SaveClientActivity extends AppCompatActivity {
         }
         client.setName(txtName.getText().toString());
         client.setAge(Integer.valueOf(txtAge.getText().toString()));
-        client.setAddress(txtAddress.getText().toString());
         client.setPhone(txtPhone.getText().toString());
-
+        client.setAddress(
+                new ClientAddress(txtCep.getText().toString(),
+                        txtTipoDeLogradouro.getText().toString(),
+                        txtLogradouro.getText().toString(),
+                        txtCity.getText().toString(),
+                        txtEstado.getText().toString()));
     }
 
     private void bindForm(Client client) {
         txtName.setText(client.getName());
         txtAge.setText(client.getAge().toString());
-        txtAddress.setText(client.getAddress());
         txtPhone.setText(client.getPhone());
+        address(client);
+    }
+
+    private void address(Client client) {
+        txtTipoDeLogradouro.setText(client.getAddress().getTipoLogradouro());
+        txtLogradouro.setText(client.getAddress().getLogradouro());
+        txtCity.setText(client.getAddress().getCidade());
+        txtEstado.setText(client.getAddress().getEstado());
     }
 
     private class GetAddressByCep extends AsyncTask<String, Void, ClientAddress> {
+        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            progressDialog = new ProgressDialog(SaveClientActivity.this);
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.show();
+
         }
 
         @Override
@@ -117,8 +142,12 @@ public class SaveClientActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(ClientAddress aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(ClientAddress clientAddress) {
+            progressDialog.dismiss();
+
+            Client client = new Client();
+            client.setAddress(clientAddress);
+            address(client);
         }
     }
 

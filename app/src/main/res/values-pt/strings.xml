@@ -18,5 +18,11 @@
     <string name="success">Sucesso</string>
     <string name="edit">Editar</string>
     <string name="cep">CEP</string>
+    <string name="addressInfo">Address</string>
+    <string name="tipoLogradouro">tipoLogradouro</string>
+    <string name="logradouro">Logradouro</string>
+    <string name="city">City</string>
+    <string name="estado">Estado</string>
+    <string name="loading">Loading</string>
 
 </resources>

@@ -23,5 +23,11 @@
     <string name="confirm">Confirmar</string>
     <string name="confirm_progress">\?</string>
     <string name="cep">CEP</string>
+    <string name="addressInfo">Address</string>
+    <string name="tipoLogradouro">tipoLogradouro</string>
+    <string name="logradouro">Logradouro</string>
+    <string name="city">City</string>
+    <string name="estado">Estado</string>
+    <string name="loading">Loading</string>
 
 </resources>

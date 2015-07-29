@@ -1,6 +1,7 @@
 package com.example.administrador.projeto1.model.services;
 
 import com.example.administrador.projeto1.model.entities.ClientAddress;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 //import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,10 +34,10 @@ public final class CepService {
             }
 
             InputStream inputStream = conn.getInputStream();
-            /*
+
             ObjectMapper objectMapper = new ObjectMapper();
             clientAddress = objectMapper.readValue(inputStream, ClientAddress.class);
-            */
+
             conn.disconnect();
 
         } catch (IOException e) {

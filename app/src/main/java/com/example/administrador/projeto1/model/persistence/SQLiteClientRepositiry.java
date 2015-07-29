@@ -67,7 +67,6 @@ public class SQLiteClientRepositiry implements ClientRepository {
             client.setName(cursor.getString(cursor.getColumnIndex(ClientContract.NAME)));
             client.setAge(cursor.getInt(cursor.getColumnIndex(ClientContract.AGE)));
             client.setPhone(cursor.getString(cursor.getColumnIndex(ClientContract.PHONE)));
-            client.setAddress(cursor.getString(cursor.getColumnIndex(ClientContract.ADDRESS)));
             return client;
         }
         return null;

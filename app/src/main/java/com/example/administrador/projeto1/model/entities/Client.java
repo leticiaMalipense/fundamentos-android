@@ -1,12 +1,10 @@
 package com.example.administrador.projeto1.model.entities;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.example.administrador.projeto1.model.persistence.ClientContract;
-import com.example.administrador.projeto1.model.persistence.MemoryClientRepository;
 import com.example.administrador.projeto1.model.persistence.SQLiteClientRepositiry;
 
 import java.io.Serializable;
@@ -16,14 +14,14 @@ public class Client implements Serializable, Parcelable {
     private Integer id;
     private String name;
     private Integer age;
-    private String address;
     private String phone;
+    private ClientAddress address;
 
-    public Client(){
+    public Client() {
         super();
     }
 
-    public Client(Parcel in){
+    public Client(Parcel in) {
         super();
         readToParcel(in);
     }
@@ -52,11 +50,14 @@ public class Client implements Serializable, Parcelable {
         this.age = age;
     }
 
-    public String getAddress() {
+    public ClientAddress getAddress() {
+        if (address == null) {
+            return address = new ClientAddress();
+        }
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(ClientAddress address) {
         this.address = address;
     }
 
@@ -121,7 +122,7 @@ public class Client implements Serializable, Parcelable {
         dest.writeString(name == null ? "" : name);
         dest.writeString(phone == null ? "" : phone);
         dest.writeInt(age == null ? -1 : age);
-        dest.writeString(address == null ? "" : address);
+        dest.writeSerializable(address == null ? "" : address);
     }
 
     public void readToParcel(Parcel in) {
@@ -131,8 +132,9 @@ public class Client implements Serializable, Parcelable {
         phone = in.readString();
         int partialAge = in.readInt();
         age = partialAge == -1 ? null : partialAge;
-        address = in.readString();
+        address = (ClientAddress) in.readSerializable();
     }
+
     public static final Parcelable.Creator<Client> CREATOR = new Parcelable.Creator<Client>() {
         public Client createFromParcel(Parcel source) {
             return new Client(source);
@@ -149,7 +151,12 @@ public class Client implements Serializable, Parcelable {
         values.put(ClientContract.NAME, client.getName());
         values.put(ClientContract.AGE, client.getAge());
         values.put(ClientContract.PHONE, client.getName());
-        values.put(ClientContract.ADDRESS, client.getName());
+        values.put(ClientContract.ZIPCODE, client.getAddress().getCep());
+        values.put(ClientContract.TYPE, client.getAddress().getTipoLogradouro());
+        values.put(ClientContract.STREET, client.getAddress().getLogradouro());
+        values.put(ClientContract.CITY, client.getAddress().getCidade());
+        values.put(ClientContract.STATE, client.getAddress().getEstado());
+
         return values;
     }
 

@@ -1,11 +1,18 @@
 package com.example.administrador.projeto1.controller;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,6 +50,29 @@ public class SaveClientActivity extends AppCompatActivity {
 
     private void bindFildes() {
         txtName = (EditText) findViewById(R.id.txtName);
+
+        txtName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_edittext_client, 0);
+        txtName.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (txtName.getRight() - txtName.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+
+                        final Intent goToSOContacts = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                        goToSOContacts.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE); // Show user only contacts w/ phone numbers
+                        startActivityForResult(goToSOContacts, 999);
+                    }
+                }
+                return false;
+            }
+        });
+
+
         txtAge = (EditText) findViewById(R.id.txtAge);
         txtPhone = (EditText) findViewById(R.id.txtPhone);
         txtCep = (EditText) findViewById(R.id.txtCep);
@@ -51,6 +81,34 @@ public class SaveClientActivity extends AppCompatActivity {
         txtCity = (EditText) findViewById(R.id.txtCity);
         txtEstado = (EditText) findViewById(R.id.txtEstado);
         bindButton();
+    }
+
+    /**
+     * @see <a href="http://developer.android.com/training/basics/intents/result.html">Getting a Result from an Activity</a>
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 999) {
+            if (resultCode == Activity.RESULT_OK) {
+                try {
+                    final Uri contactUri = data.getData();
+                    final String[] projection = {
+                            ContactsContract.CommonDataKinds.Identity.DISPLAY_NAME,
+                            ContactsContract.CommonDataKinds.Phone.NUMBER
+                    };
+                    final Cursor cursor = getContentResolver().query(contactUri, projection, null, null, null);
+                    cursor.moveToFirst();
+
+                    txtName.setText(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Identity.DISPLAY_NAME)));
+                    txtPhone.setText(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+
+                    cursor.close();
+                } catch (Exception e) {
+                    Log.d("TAG", "Unexpected error");
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void bindButton() {
@@ -117,6 +175,7 @@ public class SaveClientActivity extends AppCompatActivity {
     }
 
     private void address(Client client) {
+        txtCep.setText(client.getAddress().getCep());
         txtTipoDeLogradouro.setText(client.getAddress().getTipoLogradouro());
         txtLogradouro.setText(client.getAddress().getLogradouro());
         txtCity.setText(client.getAddress().getCidade());

@@ -112,7 +112,7 @@ public class Client implements Parcelable {
         values.put(ClientContract.ID, client.getId());
         values.put(ClientContract.NAME, client.getName());
         values.put(ClientContract.AGE, client.getAge());
-        values.put(ClientContract.PHONE, client.getName());
+        values.put(ClientContract.PHONE, client.getPhone());
         values.put(ClientContract.ZIPCODE, client.getAddress().getCep());
         values.put(ClientContract.TYPE, client.getAddress().getTipoLogradouro());
         values.put(ClientContract.STREET, client.getAddress().getLogradouro());

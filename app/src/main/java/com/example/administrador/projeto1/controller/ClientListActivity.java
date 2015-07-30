@@ -3,6 +3,7 @@ package com.example.administrador.projeto1.controller;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,8 @@ import com.example.administrador.projeto1.model.entities.Client;
 import com.example.administrador.projeto1.model.persistence.MemoryClientRepository;
 import com.example.administrador.projeto1.model.persistence.SQLiteClientRepositiry;
 import com.melnykov.fab.FloatingActionButton;
+
+import org.apache.http.protocol.HTTP;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +68,16 @@ public class ClientListActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 client = (Client) parent.getItemAtPosition(position);
                 return false;
+            }
+        });
+        listClient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Client client = (Client) parent.getItemAtPosition(position);
+                // Best Practices: http://stackoverflow.com/questions/4275678/how-to-make-phone-call-using-intent-in-android
+                final Intent goToSOPhoneCall = new Intent(Intent.ACTION_CALL /* or Intent.ACTION_DIAL (no manifest permission needed) */);
+                goToSOPhoneCall.setData(Uri.parse("tel:" + client.getPhone()));
+                startActivity(goToSOPhoneCall);
             }
         });
 
@@ -116,8 +129,19 @@ public class ClientListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menuAdd) {
-            Intent intent = new Intent(ClientListActivity.this, SaveClientActivity.class);
-            startActivity(intent);
+            // Create the text message with a string
+            final Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Seu texto aqui...");
+            sendIntent.setType(HTTP.PLAIN_TEXT_TYPE);
+
+            // Create intent to show the chooser dialog
+            final Intent chooser = Intent.createChooser(sendIntent, "Titulo Chooser");
+
+            // Verify the original intent will resolve to at least one activity
+            if (sendIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(chooser);
+            }
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -18,10 +18,10 @@
     <string name="success">Sucesso</string>
     <string name="edit">Editar</string>
     <string name="cep">CEP</string>
-    <string name="addressInfo">Address</string>
-    <string name="tipoLogradouro">tipoLogradouro</string>
+    <string name="addressInfo">Endereço</string>
+    <string name="tipoLogradouro">Tipo logradouro</string>
     <string name="logradouro">Logradouro</string>
-    <string name="city">City</string>
+    <string name="city">Cidade</string>
     <string name="estado">Estado</string>
     <string name="loading">Loading</string>
     <string name="update">Atualizar</string>
@@ -29,5 +29,7 @@
     <string name="yes">Sim</string>
     <string name="confirm">Confirmar</string>
     <string name="confirm_progress">\?</string>
+    <string name="invalid">Nome ou senha inválidos</string>
+    <string name="noConection">Sem conecxão com a internet</string>
 
 </resources>

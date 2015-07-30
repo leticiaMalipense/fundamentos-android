@@ -2,8 +2,11 @@ package com.example.administrador.projeto1.controller;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -76,11 +79,44 @@ public class SaveClientActivity extends AppCompatActivity {
         txtAge = (EditText) findViewById(R.id.txtAge);
         txtPhone = (EditText) findViewById(R.id.txtPhone);
         txtCep = (EditText) findViewById(R.id.txtCep);
+        txtCep.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_launcher3, 0);
+        txtCep.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (txtName.getRight() - txtName.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        /*
+                        ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                        boolean isConnected = false;
+                        if(activeNetwork!=null)
+                            isConnected = true;
+                        activeNetwork.isConnectedOrConnecting();
+                        if(isConnected) {
+                        */
+                            GetAddressByCep getAddressByCep = new GetAddressByCep();
+                            getAddressByCep.execute(txtCep.getText().toString());
+                        /*
+                        }else{
+                            Toast.makeText(SaveClientActivity.this, R.string.noConection, Toast.LENGTH_LONG).show();
+                        }
+                        */
+                    }
+                }
+                return false;
+            }
+        });
+
         txtTipoDeLogradouro = (EditText) findViewById(R.id.txtTipoDeLogradouro);
         txtLogradouro = (EditText) findViewById(R.id.txtLogradouro);
         txtCity = (EditText) findViewById(R.id.txtCity);
         txtEstado = (EditText) findViewById(R.id.txtEstado);
-        bindButton();
+
     }
 
     /**
@@ -111,16 +147,6 @@ public class SaveClientActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void bindButton() {
-        btnFindCep = (Button) findViewById(R.id.btnFindCep);
-        btnFindCep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GetAddressByCep getAddressByCep = new GetAddressByCep();
-                getAddressByCep.execute(txtCep.getText().toString());
-            }
-        });
-    }
 
     private void getParameters() {
         Bundle extras = getIntent().getExtras();
@@ -142,7 +168,8 @@ public class SaveClientActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menuSave) {
-            if (FormHelper.requiredValidate(SaveClientActivity.this, txtName, txtAge, txtPhone)) {
+            if (FormHelper.requiredValidate(SaveClientActivity.this, txtName, txtAge, txtPhone, txtCep,
+                    txtTipoDeLogradouro, txtLogradouro, txtCity, txtEstado)) {
                 bindCliente();
                 client.save();
                 SaveClientActivity.this.finish();

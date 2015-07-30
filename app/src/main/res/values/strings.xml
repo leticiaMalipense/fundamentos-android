@@ -29,5 +29,7 @@
     <string name="city">City</string>
     <string name="estado">Estado</string>
     <string name="loading">Loading</string>
+    <string name="invalid">Invalid</string>
+    <string name="noConection">No Connection</string>
 
 </resources>

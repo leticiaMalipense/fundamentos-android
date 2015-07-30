@@ -49,17 +49,12 @@
             android:hint="@string/cep"
             android:inputType="number" />
 
-        <Button
-            android:id="@+id/btnFindCep"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/cep" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:hint="@string/addressInfo"
+            android:paddingTop="5dp"
             android:textSize="20dp" />
 
         <EditText

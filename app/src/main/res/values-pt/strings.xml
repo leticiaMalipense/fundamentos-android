@@ -31,5 +31,6 @@
     <string name="confirm_progress">\?</string>
     <string name="invalid">Nome ou senha inválidos</string>
     <string name="noConection">Sem conecxão com a internet</string>
+    <string name="zipcodeInvalid">Cep informador não encontrado</string>
 
 </resources>

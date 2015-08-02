@@ -29,14 +29,12 @@ public final class CepService {
 
             int responseCode = conn.getResponseCode();
 
-            if (responseCode != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Error code: " + responseCode);
-            }
-
             InputStream inputStream = conn.getInputStream();
-
             ObjectMapper objectMapper = new ObjectMapper();
-            clientAddress = objectMapper.readValue(inputStream, ClientAddress.class);
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                clientAddress = objectMapper.readValue(inputStream, ClientAddress.class);
+            }
 
             conn.disconnect();
 

@@ -90,22 +90,25 @@ public class SaveClientActivity extends AppCompatActivity {
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (event.getRawX() >= (txtName.getRight() - txtName.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        /*
-                        ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                        ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
                         boolean isConnected = false;
-                        if(activeNetwork!=null)
+                        if (activeNetwork != null) {
                             isConnected = true;
-                        activeNetwork.isConnectedOrConnecting();
-                        if(isConnected) {
-                        */
+                            activeNetwork.isConnectedOrConnecting();
+                        }
+                        if (isConnected) {
+
+
                             GetAddressByCep getAddressByCep = new GetAddressByCep();
                             getAddressByCep.execute(txtCep.getText().toString());
-                        /*
-                        }else{
+
+                        } else {
                             Toast.makeText(SaveClientActivity.this, R.string.noConection, Toast.LENGTH_LONG).show();
                         }
-                        */
+
+
                     }
                 }
                 return false;
@@ -230,7 +233,10 @@ public class SaveClientActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ClientAddress clientAddress) {
             progressDialog.dismiss();
+            if(clientAddress == null) {
+                Toast.makeText(SaveClientActivity.this, R.string.zipcodeInvalid, Toast.LENGTH_LONG).show();
 
+            }
             Client client = new Client();
             client.setAddress(clientAddress);
             address(client);

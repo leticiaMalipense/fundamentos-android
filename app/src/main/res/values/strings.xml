@@ -31,5 +31,6 @@
     <string name="loading">Loading</string>
     <string name="invalid">Invalid</string>
     <string name="noConection">No Connection</string>
+    <string name="zipcodeInvalid">Cep informador não encontrado</string>
 
 </resources>

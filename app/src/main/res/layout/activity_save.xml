@@ -14,34 +14,45 @@
             android:layout_height="wrap_content"
             android:src="@drawable/abc_ratingbar_full_material" />
 
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:hint="@string/personalData"
             android:textSize="20dp" />
-
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/txtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name" />
-
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/txtAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/age"
             android:inputType="number" />
-
-
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/txtPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/phone"
             android:inputType="phone" />
-
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
         <EditText
             android:id="@+id/txtCep"
             android:layout_width="match_parent"
@@ -49,6 +60,9 @@
             android:hint="@string/cep"
             android:inputType="number" />
 
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,31 +70,46 @@
             android:hint="@string/addressInfo"
             android:paddingTop="5dp"
             android:textSize="20dp" />
-
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/txtTipoDeLogradouro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/tipoLogradouro" />
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/txtLogradouro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/logradouro" />
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/txtCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/city" />
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/txtEstado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/estado" />
-
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
     </LinearLayout>
 </ScrollView>

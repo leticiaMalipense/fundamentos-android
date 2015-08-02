@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -78,6 +79,8 @@ public class SaveClientActivity extends AppCompatActivity {
 
         txtAge = (EditText) findViewById(R.id.txtAge);
         txtPhone = (EditText) findViewById(R.id.txtPhone);
+        txtPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
         txtCep = (EditText) findViewById(R.id.txtCep);
         txtCep.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_launcher3, 0);
         txtCep.setOnTouchListener(new View.OnTouchListener() {
@@ -233,7 +236,7 @@ public class SaveClientActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ClientAddress clientAddress) {
             progressDialog.dismiss();
-            if(clientAddress == null) {
+            if (clientAddress == null) {
                 Toast.makeText(SaveClientActivity.this, R.string.zipcodeInvalid, Toast.LENGTH_LONG).show();
 
             }

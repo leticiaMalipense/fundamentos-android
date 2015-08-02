@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menuSave"
         app:showAsAction="always"
-        android:icon="@drawable/ic_action_action_find_in_page"
+        android:icon="@drawable/ic_save"
         android:title="@string/save" />
 
 
